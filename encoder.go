@@ -3,7 +3,7 @@ package xdelta
 import (
 	"context"
 	"fmt"
-	lib "github.com/nine-lives-later/go-xdelta/xdelta-lib"
+	lib "github.com/konsorten/go-xdelta/xdelta-lib"
 	"io"
 	"runtime"
 	"time"

@@ -1,4 +1,4 @@
-module github.com/rorschach01/go-xdelta
+module github.com/Athkore/go-xdelta
 
 require (
 	github.com/dustin/go-humanize v1.0.0
