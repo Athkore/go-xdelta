@@ -6,9 +6,9 @@
 #undef _C99_SOURCE
 
 #define XD3_USE_LARGEFILE64 1
-#define SECONDARY_DJW 0
-#define SECONDARY_FGK 0
-#define SECONDARY_LZMA 0
+#define SECONDARY_DJW 1
+#define SECONDARY_FGK 1
+#define SECONDARY_LZMA 1
 
 #ifdef _DEBUG
     #define XD3_DEBUG 1

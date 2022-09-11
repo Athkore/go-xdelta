@@ -18,13 +18,17 @@ XdeltaError XdeltaDecoder::init(int blockSizeKB, const char* fileId, bool hasSou
     _config.winsize = blockSizeKB * 1024;
     _config.flags = 0;
 
-    if (_config.winsize > XD3_HARDMAXWINSIZE)
+    if (_config.winsize > XD3_HARDMAXWINSIZE) {
+        fprintf(stderr, "winsize too large\n");
         return XdeltaError_ArgumentOutOfRange;
+    }
 
 	auto r = xd3_config_stream(&_stream, &_config);
 
-    if (r != XdeltaError_OK)
+    if (r != XdeltaError_OK) {
+        fprintf(stderr, "%s 0x%x\n", _stream.msg, r);
         return r;
+    }
 
     // configure source
     _source.ioh = this;  // pass this pointer
@@ -37,8 +41,9 @@ XdeltaError XdeltaDecoder::init(int blockSizeKB, const char* fileId, bool hasSou
 
         r = xd3_set_source(&_stream, &_source);
     
-        if (r != XdeltaError_OK)
+        if (r != XdeltaError_OK) {
             return r;
+        }
     }
 
     return XdeltaError_OK;
@@ -94,8 +99,10 @@ XdeltaError XdeltaDecoder::process(XdeltaState* state) {
 
     *state = r;
 
-    if (isXdeltaStateError(r))
+    if (isXdeltaStateError(r)) {
+        fprintf(stderr, "%s %d\n", _stream.msg, r);
         return r;
+    }
 
     return XdeltaError_OK;
 }

@@ -4,27 +4,35 @@
 
 #include "xdelta-encoder.h"
 #include <cstdint>
+#include <stdio.h>
 
 XdeltaError XdeltaEncoder::init(int blockSizeKB, const char* fileId, bool hasSource, uint32_t flags) {
     if (blockSizeKB < 0)
         return XdeltaError_ArgumentOutOfRange;
     if (fileId == nullptr)
         return XdeltaError_ArgumentNull;
-        
     // configure stream
     if (blockSizeKB <= 0)
         blockSizeKB = (8 * 1024); // 8 MB
     
     _config.winsize = blockSizeKB * 1024;
-    _config.flags = flags;
+    _config.flags = 0 | flags;
 
-    if (_config.winsize > XD3_HARDMAXWINSIZE)
+    if (_config.winsize > XD3_HARDMAXWINSIZE){
         return XdeltaError_ArgumentOutOfRange;
+    }
 
 	auto r = xd3_config_stream(&_stream, &_config);
 
-    if (r != XdeltaError_OK)
+    if (r != XdeltaError_OK) {
+        fprintf(stderr, "SEC_TYPE available %x\n", XD3_SEC_TYPE);
+        fprintf(stderr, "FLAG %x\n", flags);
+        fprintf(stderr, "FGK %x\n", XD3_SEC_FGK);
+        fprintf(stderr, "DJW %x\n", XD3_SEC_DJW);
+        fprintf(stderr, "LZMA %x\n", XD3_SEC_LZMA);
+        fprintf(stderr, "%s %d\n", _stream.msg, r);
         return r;
+    }
 
     // configure source
     _source.ioh = this;  // pass this pointer

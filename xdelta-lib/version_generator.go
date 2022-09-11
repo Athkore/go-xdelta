@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	mainHeader, _ := ioutil.ReadFile("src/xdelta3/xdelta3-main.h")
+	mainHeader, _ := ioutil.ReadFile("xdelta3/xdelta3-main.h")
 
 	r := regexp.MustCompile("Xdelta version ([0-9.]+),")
 	f := r.FindSubmatch(mainHeader)

@@ -2,10 +2,12 @@
 
 package lib
 
-// #cgo CFLAGS: -I src -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -DWINVER=0x0601 -D_WIN32_WINNT=0x0601
-// #cgo CXXFLAGS: -I src -Wno-literal-suffix -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -DWINVER=0x0601 -D_WIN32_WINNT=0x0601
+// #cgo CFLAGS: -Isrc -Isrc/xdelta3 -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -DWINVER=0x0601 -D_WIN32_WINNT=0x0601
+// #cgo CXXFLAGS: -Isrc -Isrc/xdelta3 -Wno-literal-suffix -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -DWINVER=0x0601 -D_WIN32_WINNT=0x0601
+// #cgo LDFLAGS: -Lsrc/xdelta3 -llzma
 //
 // #include <stdlib.h>
+// #include <stdint.h>
 //
 // typedef size_t XdeltaError;
 // typedef void XdeltaEncoder;
@@ -17,7 +19,7 @@ package lib
 // DECLSPEC XdeltaError DECL goXdeltaNewEncoder(XdeltaEncoder** ptr);
 // DECLSPEC XdeltaError DECL goXdeltaFreeEncoder(XdeltaEncoder** ptr);
 // DECLSPEC XdeltaError DECL goXdeltaEncoderGetStreamError(XdeltaEncoder* ptr, char** str);
-// DECLSPEC XdeltaError DECL goXdeltaEncoderInit(XdeltaEncoder* ptr, int blockSizeKB, const char* fileId, int hasSource);
+// DECLSPEC XdeltaError DECL goXdeltaEncoderInit(XdeltaEncoder* ptr, int blockSizeKB, const char* fileId, int hasSource, uint32_t flags);
 // DECLSPEC XdeltaError DECL goXdeltaEncoderSetHeader(XdeltaEncoder* ptr, const char* data, int length);
 // DECLSPEC XdeltaError DECL goXdeltaEncoderProcess(XdeltaEncoder* ptr, int* state);
 // DECLSPEC XdeltaError DECL goXdeltaEncoderProvideInputData(XdeltaEncoder* ptr, const char* data, int length, int finalInput);
@@ -81,11 +83,11 @@ func EncoderGetStreamError(handle unsafe.Pointer) error {
 	return fmt.Errorf("%v", C.GoString(str))
 }
 
-func EncoderInit(handle unsafe.Pointer, blockSizeKB int, fileId string, hasSource bool) error {
+func EncoderInit(handle unsafe.Pointer, blockSizeKB int, fileId string, hasSource bool, flags uint) error {
 	fileIdStr := C.CString(fileId)
 	defer C.CFree(fileIdStr)
 
-	return toError(C.goXdeltaEncoderInit(handle, C.int(blockSizeKB), fileIdStr, boolToInt(hasSource)))
+	return toError(C.goXdeltaEncoderInit(handle, C.int(blockSizeKB), fileIdStr, boolToInt(hasSource), C.uint32_t(flags)))
 }
 
 func EncoderSetHeader(handle unsafe.Pointer, data unsafe.Pointer, dataLen int) error {

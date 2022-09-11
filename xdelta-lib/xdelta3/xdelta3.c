@@ -286,7 +286,7 @@
 
 #ifndef SECONDARY_LZMA
 #ifdef HAVE_LZMA_H
-#define SECONDARY_LZMA 1
+#define SECONDARY_LZMA 0
 #else
 #define SECONDARY_LZMA 0
 #endif
