@@ -2,7 +2,7 @@
 
 This library provides a wrapper for the [Xdelta library](http://xdelta.org/) by Joshua MacDonald and others. 
 
-**[Click here to open the GoDoc documentation.](https://godoc.org/github.com/nine-lives-later/go-xdelta)**
+**[Click here to open the GoDoc documentation.](https://godoc.org/github.com/Athkore/go-xdelta)**
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ There is no process for deleting files (see *Best Practices* below).
 The following example is more or less pseudo-code. (It should be easy enough to understand.)
 
 ```go
-import "github.com/nine-lives-later/go-xdelta"
+import "github.com/Athkore/go-xdelta"
 
 options := xdelta.EncoderOptions{
     FileID:    "myfile.ext",
