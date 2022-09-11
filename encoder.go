@@ -3,7 +3,7 @@ package xdelta
 import (
 	"context"
 	"fmt"
-	lib "github.com/konsorten/go-xdelta/xdelta-lib"
+	lib "github.com/Athkore/go-xdelta/xdelta-lib"
 	"io"
 	"runtime"
 	"time"
@@ -34,6 +34,7 @@ type EncoderOptions struct {
 	PatchFile io.Writer
 
 	Header []byte
+	Flags uint;
 
 	EnableStats bool
 }
@@ -50,7 +51,7 @@ func NewEncoder(options EncoderOptions) (*Encoder, error) {
 		options.BlockSizeKB = (1) // 1 KB
 	}
 
-	err = lib.EncoderInit(handle, options.BlockSizeKB, options.FileID, options.FromFile != nil)
+	err = lib.EncoderInit(handle, options.BlockSizeKB, options.FileID, options.FromFile != nil, options.Flags)
 	if err != nil {
 		lib.FreeEncoder(handle)
 
