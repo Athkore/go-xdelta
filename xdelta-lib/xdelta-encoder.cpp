@@ -1,10 +1,11 @@
 // +build cgo
 
 #include "xdelta-warnings.h"
-#include "xdelta.h"
-#include "xdelta-encoder.h"
 
-XdeltaError XdeltaEncoder::init(int blockSizeKB, const char* fileId, bool hasSource) {
+#include "xdelta-encoder.h"
+#include <cstdint>
+
+XdeltaError XdeltaEncoder::init(int blockSizeKB, const char* fileId, bool hasSource, uint32_t flags) {
     if (blockSizeKB < 0)
         return XdeltaError_ArgumentOutOfRange;
     if (fileId == nullptr)
@@ -15,7 +16,7 @@ XdeltaError XdeltaEncoder::init(int blockSizeKB, const char* fileId, bool hasSou
         blockSizeKB = (8 * 1024); // 8 MB
     
     _config.winsize = blockSizeKB * 1024;
-    _config.flags = 0;
+    _config.flags = flags;
 
     if (_config.winsize > XD3_HARDMAXWINSIZE)
         return XdeltaError_ArgumentOutOfRange;
@@ -41,6 +42,10 @@ XdeltaError XdeltaEncoder::init(int blockSizeKB, const char* fileId, bool hasSou
     }
 
     return XdeltaError_OK;
+}
+
+void XdeltaEncoder::setFlags(uint32_t flags) {
+    xd3_set_flags(&_stream, flags);
 }
 
 XdeltaError XdeltaEncoder::setHeader(const char* ptr, int length) {

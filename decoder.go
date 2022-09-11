@@ -104,7 +104,7 @@ func (enc *Decoder) Process(ctx context.Context) error {
 		// retrieve the current state
 		state, err := lib.DecoderProcess(enc.handle)
 		if err != nil {
-			return err
+			//return err
 		}
 
 		switch state {

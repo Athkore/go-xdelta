@@ -1,6 +1,7 @@
 #ifndef _XDELTA_ENCODER_H_34535435
 #define _XDELTA_ENCODER_H_34535435
 
+#include "xdelta.h"
 #include "xdelta-error.h"
 
 class XdeltaEncoder {
@@ -16,7 +17,8 @@ public:
     // free the returned string!
     char* getStreamError() const;
 
-    XdeltaError init(int blockSizeKB, const char* fileId, bool hasSource);
+    XdeltaError init(int blockSizeKB, const char* fileId, bool hasSource, uint32_t flags);
+    void setFlags(uint32_t flags);
     XdeltaError setHeader(const char* ptr, int length);
 
     XdeltaError process(XdeltaState* state);

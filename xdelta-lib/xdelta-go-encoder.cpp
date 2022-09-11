@@ -42,12 +42,12 @@ DECLSPEC XdeltaError DECL goXdeltaEncoderGetStreamError(XdeltaEncoder* ptr, char
     return XdeltaError_OK;
 }
 
-DECLSPEC XdeltaError DECL goXdeltaEncoderInit(XdeltaEncoder* ptr, int blockSizeKB, const char* fileId, int hasSource)
+DECLSPEC XdeltaError DECL goXdeltaEncoderInit(XdeltaEncoder* ptr, int blockSizeKB, const char* fileId, int hasSource, uint32_t flags)
 {
     if (ptr == nullptr)
         return XdeltaError_ArgumentNull;
 
-    return ptr->init(blockSizeKB, fileId, hasSource);
+    return ptr->init(blockSizeKB, fileId, hasSource, flags);
 }
 
 DECLSPEC XdeltaError DECL goXdeltaEncoderSetHeader(XdeltaEncoder* ptr, const char* data, int length)
