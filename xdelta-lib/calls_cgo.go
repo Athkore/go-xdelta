@@ -2,9 +2,9 @@
 
 package lib
 
-// #cgo CFLAGS: -Isrc -Isrc/xdelta3 -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -DWINVER=0x0601 -D_WIN32_WINNT=0x0601
-// #cgo CXXFLAGS: -Isrc -Isrc/xdelta3 -Wno-literal-suffix -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -DWINVER=0x0601 -D_WIN32_WINNT=0x0601
-// #cgo LDFLAGS: -Lsrc/xdelta3 -llzma
+// #cgo CFLAGS: -Ixdelta3 -Wmissing-include-dirs -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -DWINVER=0x0601 -D_WIN32_WINNT=0x0601
+// #cgo CXXFLAGS: -Ixdelta3 -Wmissing-include-dirs -Wno-literal-suffix -D_POSIX_C_SOURCE=200809L -D_XOPEN_SOURCE=700 -DWINVER=0x0601 -D_WIN32_WINNT=0x0601
+// #cgo LDFLAGS: -Lxdelta3 -llzma
 //
 // #include <stdlib.h>
 // #include <stdint.h>
