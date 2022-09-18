@@ -8,7 +8,9 @@
 #define XD3_USE_LARGEFILE64 1
 #define SECONDARY_DJW 1
 #define SECONDARY_FGK 1
-#define SECONDARY_LZMA 1
+#ifndef SECONDARY_LZMA
+    #define SECONDARY_LZMA 0
+#endif
 
 #ifdef _DEBUG
     #define XD3_DEBUG 1
